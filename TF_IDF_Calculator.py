@@ -1,10 +1,12 @@
 from collections import Counter
 from sklearn.feature_extraction.text import TfidfVectorizer
 from documentTokenizer import DF,textOperation;
+import pandas as pd
 
-textOperation('files/doc1.txt')
-textOperation('files/doc2.txt')
-textOperation('files/doc3.txt')
+# textOperation('files/doc1.txt')
+# textOperation('files/doc2.txt')
+# textOperation('files/doc3.txt')
+# textOperation('files/doc4.txt')
 
 def Calculate_TF(doc):
     # Count the frequency of each term
@@ -65,6 +67,25 @@ def Calculate_TF_IDF(doc):
 
     return tfidf
 
+def Matrix_TF_IDF(doc):
+    # Join the tokenized words back into a document
+    # document = ' '.join(doc)
+
+    # Create an instance of TfidfVectorizer
+    vectorizer = TfidfVectorizer()
+
+    # Fit the vectorizer on the document and transform it into TF-IDF matrix
+    tfidf_matrix = vectorizer.fit_transform(doc)
+
+    # Get the feature names (terms)
+    feature_names = vectorizer.get_feature_names_out()
+    # print(type(tfidf_matrix), tfidf_matrix.shape)
+    tf_idf_array = tfidf_matrix.toarray()
+    words_set = vectorizer.get_feature_names_out()
+    df_tf_idf = pd.DataFrame(tf_idf_array, columns = words_set)
+    print(df_tf_idf)
+
+
 def displayTF_IDF(tfidf):
     for term, score in tfidf.items():
         print(f"Term: {term}, TF-IDF Score: {score:.4f}")
@@ -85,5 +106,15 @@ for keys,val in DF.items():
     idf = Calculate_TF_IDF(val)
     displayTF_IDF(idf)
     print('---------------------------------------')
+    
+# Calculate_TF_IDF(DF.values())
+
+abc = [DF[keys] for keys in DF.keys()]
+joined = []
+for i in abc:
+    joined.append(' '.join(i))
+    
+# print(joined)
+Matrix_TF_IDF(joined)
     
 input()
