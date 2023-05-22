@@ -48,17 +48,16 @@ textOperation('files/doc1.txt')
 textOperation('files/doc2.txt')
 textOperation('files/doc3.txt')
 textOperation('files/doc4.txt')
+# print(DF)
 
 
 
+def diplayFinalTextOperation():
+    print("Tokens Found in each document after applying Text Operations")
+    for keys,val in DF.items():
+        print("Document " + keys)
+        print(val)
+        print('---------------------------------------')
 
 
-
-# for keys,val in DF.items():
-#     print("Document " + keys)
-#     tf = Calculate_TF(val)
-#     displayTF(tf)
-#     print('---------------------------------------')
-
-
-
+# diplayFinalTextOperation()

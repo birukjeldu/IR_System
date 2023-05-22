@@ -79,11 +79,10 @@ def Matrix_TF_IDF(doc):
 
     # Get the feature names (terms)
     feature_names = vectorizer.get_feature_names_out()
-    # print(type(tfidf_matrix), tfidf_matrix.shape)
     tf_idf_array = tfidf_matrix.toarray()
     words_set = vectorizer.get_feature_names_out()
     df_tf_idf = pd.DataFrame(tf_idf_array, columns = words_set)
-    print(df_tf_idf)
+    return df_tf_idf
 
 
 def displayTF_IDF(tfidf):
@@ -100,21 +99,23 @@ def displayTF(tf):
     for term, tf_value in tf.items():
         print(f"Term: {term}, TF: {tf_value:.4f}")
         
-        
-for keys,val in DF.items():
-    print("Document " + keys)
-    idf = Calculate_TF_IDF(val)
-    displayTF_IDF(idf)
-    print('---------------------------------------')
-    
-# Calculate_TF_IDF(DF.values())
 
+    
 abc = [DF[keys] for keys in DF.keys()]
 joined = []
 for i in abc:
     joined.append(' '.join(i))
     
-# print(joined)
-Matrix_TF_IDF(joined)
+result = Matrix_TF_IDF(joined)
+
+def displayResult():
+    for keys,val in DF.items():
+        print("Document " + keys)
+        idf = Calculate_TF_IDF(val)
+        displayTF_IDF(idf)
+        print('---------------------------------------')
+    print(result)
     
-input()
+    
+# displayResult()
+# input()
