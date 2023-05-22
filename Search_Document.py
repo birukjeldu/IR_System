@@ -1,41 +1,57 @@
-from gensim import corpora, models, similarities
+import pandas as pd
+import TF_IDF_Calculator as tf
+from nltk.stem import PorterStemmer
 
-# List of documents in your corpus
-corpus = [
-    "Document 1: This is the first document",
-    "Document 2: This document is the second document",
-    "Document 3: And this is the third one",
-]
 
-# Tokenize the documents
-tokenized_corpus = [doc.lower().split() for doc in corpus]
+def wordOperation(text):
+    stemmer = PorterStemmer()
+    token = stemmer.stem(text)
+    return token
 
-# Create a dictionary from the tokenized corpus
-dictionary = corpora.Dictionary(tokenized_corpus)
+userInputResult = dict()
 
-# Create a TF-IDF model from the tokenized corpus
-tfidf = models.TfidfModel(dictionary=dictionary)
-corpus_tfidf = [tfidf[dictionary.doc2bow(tokens)]
-                for tokens in tokenized_corpus]
+def wordChecker(word,dictionay):
+    for row in dictionay.items():
+        if(word.lower()==row[0]):
+            return row[1]
+    return -1
+    
 
-# Create an index for the corpus
-index = similarities.MatrixSimilarity(corpus_tfidf)
+# Is used to covert the panda dataframe into dictionary
+result = tf.result
+result = result.reset_index()
+weightedTokens = []
+for index,row in result.iterrows():
+    weightedTokens.append(row.to_dict())
+    
+term = wordOperation("a")
+def resultToDict(term):
+    for row in weightedTokens:
+        resultCounter = wordChecker(term,row)  
+        userInputResult[weightedTokens.index(row)] = resultCounter
+    
 
-# Perform a query
-query = "third"
-query_bow = dictionary.doc2bow(query.lower().split())
-query_tfidf = tfidf[query_bow]
+def displayResult(term):
+    docName = ['doc1','doc2','doc3','doc4']
+    print(f"Relevant Documents for term '{term}'")
+    flag = 0
+    count = 0
+    for key, val in sortedUserResult.items():
+        if(val > 0):
+            flag = 1
+            count += 1
+            print(f"\t{count}. {docName[key]}.txt --- TF-IDF = {val:.4f}")
+    
+    if flag == 0:
+        print("!!! No result was found in the documents !!!!")
 
-# Get similarity scores between the query and corpus documents
-sims = index[query_tfidf]
-
-# Sort the similarity scores
-sorted_sims = sorted(enumerate(sims), key=lambda item: -item[1])
-
-# Retrieve the most similar document from the corpus
-most_similar_doc_index = sorted_sims[0][0]
-most_similar_doc = corpus[most_similar_doc_index]
-
-print(f"Query: {query}")
-print(f"Most similar document: {most_similar_doc}")
-
+while True:
+    print("Enter a word to search(q - to exit ): ",end='')
+    term = input()
+    if term.lower() == 'q':
+        break
+    term = wordOperation(term)
+    resultToDict(term)
+    sortedUserResult = dict(sorted(userInputResult.items(),key=lambda x:x[1]))
+    displayResult(term)
+    print("\t----------------------------")

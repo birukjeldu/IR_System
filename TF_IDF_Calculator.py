@@ -3,11 +3,6 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from documentTokenizer import DF,textOperation;
 import pandas as pd
 
-# textOperation('files/doc1.txt')
-# textOperation('files/doc2.txt')
-# textOperation('files/doc3.txt')
-# textOperation('files/doc4.txt')
-
 def Calculate_TF(doc):
     # Count the frequency of each term
     term_counts = Counter(doc)
@@ -68,9 +63,6 @@ def Calculate_TF_IDF(doc):
     return tfidf
 
 def Matrix_TF_IDF(doc):
-    # Join the tokenized words back into a document
-    # document = ' '.join(doc)
-
     # Create an instance of TfidfVectorizer
     vectorizer = TfidfVectorizer()
 

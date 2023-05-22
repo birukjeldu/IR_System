@@ -1,1 +1,5 @@
-Running Swimming The Impact of Climate Change on Biodiversity. This document explores the Significant impact of climate change on Biodiversity. It discusses the various ways in which Rising Temperatures, changing precipitation patterns, and altered habitats affect ecosystems and species. The document emphasizes the importance of understanding and mitigating these effects to preserve biodiversity and ensure the long-term health of our planet.
+Iterating through pandas objects is generally slow. In many cases, iterating manually over the rows is not needed and can be avoided with one of the following approaches:
+
+Look for a vectorized solution: many operations can be performed using built-in methods or NumPy functions, (boolean) indexing, …
+When you have a function that cannot work on the full DataFrame/Series at once, it is better to use apply() instead of iterating over the values. See the docs on function application.
+If you need to do iterative manipulations on the values but performance is important, consider writing the inner loop with cython or numba. See the enhancing performance section for some examples of this approach.
