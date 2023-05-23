@@ -97,7 +97,7 @@ def displayResult(term,q):
         count = 0
         for i in term:
             count +=1
-            print(f"\t{count}. {docName[i[0]]} ---  {i[1]}")
+            print(f"\t{count}. {docName[i[0]]}.txt ---  {i[1]}")
 
 while True:
     print("Enter a word to search(q - to exit ): ",end='')
